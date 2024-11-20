@@ -11,6 +11,7 @@ app.listen(port,()=>{
     console.log(`Server Is Started On Port ${port}`);
 })
 
+const Razorpay = require('razorpay');
 
 //---------------------------------------------------------------------------------------
 
@@ -171,6 +172,53 @@ app.get("/mapbox",ensureRole("User"), wrapAsync(async (req, res) => {
     const serviceProviders = await ServiceProvider.find({}).select('geometry _id');  // Fetching providers with only necessary fields
     res.render("map/map.ejs", { serviceProviders });
 }));
+
+
+
+//Payment
+
+const instance = new Razorpay({
+    key_id: 'rzp_live_0AHfGkDFyzMpPX',
+    key_secret: '4kXfLxC4AlNs9sutQKYkyjv0',
+});
+
+app.get('/payment', (req, res) => {
+    res.render("payment/payment.ejs"); // Serve the frontend page
+});
+
+app.post('/create-order', async (req, res) => {
+    const { amount } = req.body; // Amount from frontend (in rupees)
+    const options = {
+      amount: amount * 100, // Convert to smallest currency unit (e.g., paise for INR)
+      currency: "INR",
+      receipt: `receipt_${Date.now()}`,
+    };
+  
+    try {
+      const order = await Razorpay.orders.create(options);
+      res.json(order);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error creating order");
+    }
+  });
+
+  app.post('/verify-payment', (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+  
+    const secret = 'YOUR_KEY_SECRET'; // Replace with your Razorpay secret key
+    const crypto = require('crypto');
+  
+    const generatedSignature = crypto.createHmac('sha256', secret)
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+      .digest('hex');
+  
+    if (generatedSignature === razorpay_signature) {
+      res.json({ success: true, message: 'Payment verified successfully' });
+    } else {
+      res.json({ success: false, message: 'Payment verification failed' });
+    }
+  });
   
 
 //---------------Error Handling ---------------------------------------------------------//
