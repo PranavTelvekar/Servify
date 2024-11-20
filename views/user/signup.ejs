@@ -7,22 +7,51 @@
     <title>Sign Up</title>
     <style>
         body {
-            background: linear-gradient(135deg, #43cea2, #185a9d);
+            font-size: 30px;
+            background-color: #F5F5F5; /* Off White */
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Lora', serif;
+            color: #0D1B2A; /* Rich Black for text */
         }
+        /* Header styling */
+        .header {
+            width: 100%;
+            background: #1F3B4D; /* Deep Navy */
+            color: #F5F5F5; /* Off White for contrast */
+            padding: 10px 0;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        /* Sign Up container styles */
         .form-container {
-            width: 25rem;
-            height: 37rem;
+            width: 30rem;
+            height: 55rem;
             margin: 50px auto;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #a4c2ed; /* Light Slate Gray */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-center {
+            font-weight: bold;
+            color: #1F3B4D; /* Deep Navy */
+            margin-bottom: 20px;
         }
 
         .address {
@@ -30,23 +59,46 @@
             gap: 15px;
         }
 
+
         .form-label {
             font-weight: 500;
+            color: #333;
         }
 
+        /* Button styling */
         .btn-primary {
             width: 100%;
-            background: linear-gradient(90deg, #8e2de2, #4a00e0);
+            background: #D4AF37; /* Gold */
             border: none;
             transition: background 0.3s ease;
         }
 
         .btn-primary:hover {
-            background: linear-gradient(45deg, #b522ef, #fa6b60);
+            background: #B08C2F; /* Darker shade of Gold */
+        }
+        /* Footer styling */
+        .footer {
+            width: 100%;
+            background: #A0A7B1; /* Light Slate Gray */
+            color: #0D1B2A; /* Rich Black */
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .footer p {
+            margin: 0;
         }
     </style>
 </head>
 <body>
+    <!-- Header with Back Button -->
+    <header class="header">
+        <h1>Epic Engineers</h1>
+        <button class="back-btn" onclick="history.back()">Back</button>
+    </header>
     <div class="container">
         <div class="form-container">
             <h3 class="text-center mb-4">Sign Up As User</h3>
@@ -98,6 +150,10 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Your Company. All rights reserved.</p>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
