@@ -8,9 +8,40 @@
     <title>Slot Creation Form</title>
     <style>
         body {
-            background: linear-gradient(to right, #8ef2f9, #81a8fb); 
+            background-color: #F5F5F5; /* Off White */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Lora', serif;
+            color: #0D1B2A; /* Rich Black for text */
         }
 
+        nav {
+            padding: 1rem 0;
+            background-color: #fff;
+        }
+
+        .navbar {
+            width: 100%;
+            background: #1F3B4D; /* Deep Navy */
+            color: #F5F5F5; /* Off White for contrast */
+            padding: 10px 0;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #c89f18 !important; /* Accent Color */
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .navbar-brand:hover {
+            color: #1F3B4D !important; /* Primary Color */
+        }
+        
         .form-container {
             max-width: 650px; /* Increased width for a more spacious form */
             margin: 50px auto;
@@ -28,29 +59,35 @@
 
         .form-heading {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
             font-weight: bold;
-            color: #343a40; /* Dark color for the heading */
         }
 
         .terms-container {
-            margin-top: 30px;
-            margin-bottom: 30px; 
+            background: #1F3B4D; /* Primary Color */
+            color: #F5F5F5; /* Background Color */
             padding: 20px;
-            border: 1px solid #feffb0; /* Light border for the terms container */
-            border-radius: 10px;
-            background-color: #cffbbe; /* Light background for contrast */
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+            font-family: 'Roboto', sans-serif;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            width: 50%;
-            padding: 12px;
-            border-radius: 1rem;
+            background: #D4AF37; /* Accent Color */
+            border: none;
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            padding: 10px 25px;
+            transition: background 0.3s ease;
         }
-
-        .btn-primary:hover{
-            background: linear-gradient(45deg, #b522ef, #fa6b60);
+        .btn-primary:hover {
+            background: #A0A7B1; /* Secondary Color */
         }
         .btn:disabled {
             background: #a0a5b1;
@@ -78,6 +115,48 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-grey">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><b>Epic Engineers</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="me-auto"></div>
+                <div>
+                    <% if (!currentUser) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="loginDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                            <li><a class="dropdown-item" href="/user/login">User Login</a></li>
+                            <li><a class="dropdown-item" href="/services/login">Service Provider Login</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="signupDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Sign Up
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                            <li><a class="dropdown-item" href="/user/signup">User Sign Up</a></li>
+                            <li><a class="dropdown-item" href="/services/signup">Service Provider Sign Up</a></li>
+                        </ul>
+                    </div>
+                    <% } else { %>
+
+                    <a href="/logout" class="btn btn-outline-primary">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
         <div class="form-container">
