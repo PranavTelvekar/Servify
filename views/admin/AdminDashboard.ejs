@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Providers</title>
+    <!-- Bootstrap CDN for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Reduce modal size */
+        .modal-dialog {
+            max-width: 600px; /* Adjust width */
+        }
+
+        .modal-body {
+            max-height: 400px; /* Adjust height */
+            overflow-y: auto; /* Enable scrolling */
+        }
+
+        /* Add padding and better appearance for list items */
+        .list-group-item {
+            margin-bottom: 15px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Responsive card styling */
+        .service-card {
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+        }
+
+        .service-card button {
+            font-size: 0.8rem;
+            padding: 8px 12px;
+        }
+
+        /* Card padding for smaller screens */
+        @media (max-width: 576px) {
+            .service-card {
+                padding: 10px;
+            }
+        }
+
+        .list-group-item {
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="row">
+            <!-- Services Card -->
+            <div class="col-md-6 col-lg-4 service-card">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h3 class="card-title">Services Available</h3>
+                        <p class="card-text">There are a total of <strong><%= services.length %></strong> services available.</p>
+                        <button class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#plumberModal">View Plumbers</button>
+                        <button class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#painterModal">View Painters</button>
+                        <button class="btn btn-warning mb-2" data-bs-toggle="modal" data-bs-target="#nursingHomeModal">View Nursing Homes</button>
+                        <button class="btn btn-info mb-2" data-bs-toggle="modal" data-bs-target="#beautyModal">View Beauty Services</button>
+                        <button class="btn btn-danger mb-2" data-bs-toggle="modal" data-bs-target="#electricianModal">View Electricians</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plumber Modal -->
+    <div class="modal fade" id="plumberModal" tabindex="-1" aria-labelledby="plumberModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="plumberModalLabel">Plumbers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% plumbers.forEach(plumber => { %>
+                        <li class="list-group-item">
+                            <p><strong>Name:</strong> <%= plumber.username %></p>
+                            <p><strong>Email:</strong> <%= plumber.email %></p>
+                            <p><strong>Contact Number:</strong> <%= plumber.contactNumber %></p>
+                            <p><strong>Location:</strong> <%= plumber.serviceArea.city %>, <%= plumber.serviceArea.state %></p>
+                            <p><strong>Slots Available:</strong> <%= plumber.slots.length %></p>
+                            <form action="/admin/<%= plumber._id %>" method="get">
+                                <button>See Details</button>
+                            </form>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painter Modal -->
+    <div class="modal fade" id="painterModal" tabindex="-1" aria-labelledby="painterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="painterModalLabel">Painters</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% painters.forEach(painter => { %>
+                        <li class="list-group-item">
+                            <p><strong>Name:</strong> <%= painter.username %></p>
+                            <p><strong>Email:</strong> <%= painter.email %></p>
+                            <p><strong>Contact Number:</strong> <%= painter.contactNumber %></p>
+                            <p><strong>Location:</strong> <%= painter.serviceArea.city %>, <%= painter.serviceArea.state %></p>
+                            <p><strong>Slots Available:</strong> <%= painter.slots.length %></p>
+                            <form action="/admin/<%= painter._id %>" method="get">
+                                <button>See Details</button>
+                            </form>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nursing Home Modal -->
+    <div class="modal fade" id="nursingHomeModal" tabindex="-1" aria-labelledby="nursingHomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="nursingHomeModalLabel">Nursing Homes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% nursingHomes.forEach(home => { %>
+                        <li class="list-group-item">
+                            <p><strong>Name:</strong> <%= home.username %></p>
+                            <p><strong>Email:</strong> <%= home.email %></p>
+                            <p><strong>Contact Number:</strong> <%= home.contactNumber %></p>
+                            <p><strong>Location:</strong> <%= home.serviceArea.city %>, <%= home.serviceArea.state %></p>
+                            <p><strong>Slots Available:</strong> <%= home.slots.length %></p>
+                            <form action="/admin/<%= home._id %>" method="get">
+                                <button>See Details</button>
+                            </form>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Beauty Modal -->
+    <div class="modal fade" id="beautyModal" tabindex="-1" aria-labelledby="beautyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="beautyModalLabel">Beauty Services</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% beauty.forEach(service => { %>
+                        <li class="list-group-item">
+                            <p><strong>Name:</strong> <%= service.username %></p>
+                            <p><strong>Email:</strong> <%= service.email %></p>
+                            <p><strong>Contact Number:</strong> <%= service.contactNumber %></p>
+                            <p><strong>Location:</strong> <%= service.serviceArea.city %>, <%= service.serviceArea.state %></p>
+                            <p><strong>Slots Available:</strong> <%= service.slots.length %></p>
+                            <form action="/admin/<%= service._id %>" method="get">
+                                <button>See Details</button>
+                            </form>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Electrician Modal -->
+    <div class="modal fade" id="electricianModal" tabindex="-1" aria-labelledby="electricianModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="electricianModalLabel">Electricians</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-group">
+                        <% electricians.forEach(electrician => { %>
+                        <li class="list-group-item">
+                            <p><strong>Name:</strong> <%= electrician.username %></p>
+                            <p><strong>Email:</strong> <%= electrician.email %></p>
+                            <p><strong>Contact Number:</strong> <%= electrician.contactNumber %></p>
+                            <p><strong>Location:</strong> <%= electrician.serviceArea.city %>, <%= electrician.serviceArea.state %></p>
+                            <p><strong>Slots Available:</strong> <%= electrician.slots.length %></p>
+                            <form action="/admin/<%= electrician._id %>" method="get">
+                                <button>See Details</button>
+                            </form>
+                        </li>
+                        <% }) %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS for modal functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

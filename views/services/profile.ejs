@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Service Provider Profile</title>
+    <link rel="stylesheet" href="https://api.maptiler.com/maps/streets-v2/style.css">
+    <script src="https://cdn.maptiler.com/leaflet/1.7.1/leaflet.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+    <style>
+        #map {
+            margin-left: 8rem; 
+            height: 400px;
+            width: 80%; 
+        }
+        .navbar-brand {
+            height: 50px;
+            width: 180px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: white;
+        }
+        .navbar-brand:hover {
+            background: linear-gradient(45deg, #b522ef, #fa6b60);
+            color: #fff;
+        }
+
+        .profile-header {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            margin-top: 20px;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+        .profile-header img {
+            width: 250px; /* Set a fixed width */
+            height: 250px; /* Set a fixed height */
+            object-fit: cover; /* Ensures the image covers the area while maintaining aspect ratio */
+            border-radius: 50%; /* Makes the image circular */
+            margin-bottom: 1rem; /* Space below the image */
+        }
+
+
+        .card {
+            margin-bottom: 1.5rem;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            direction: rtl;
+            display: inline-flex;
+            font-size: 1.5rem;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            color: lightgray;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        .star-rating input:checked~label,
+        .star-rating input:hover~label {
+            color: gold;
+        }
+
+        .review-section {
+            margin-top: 2rem;
+        }
+
+        .review-container {
+            background-color: #fff;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .review-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .review-card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .rating-stars {
+            font-size: 1.2rem;
+            color: gold;
+        }
+
+        /* Custom styles for modal */
+        .modal-body {
+            max-height: 400px; /* Set a max height for the modal body */
+            overflow-y: auto;  /* Enable vertical scrolling */
+        }
+        footer {
+            background: linear-gradient(120deg, #6a11cb, #2575fc); 
+            color: white; 
+            padding: 40px 20px; 
+            text-align: center; 
+            position: relative; 
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none; 
+            transition: color 0.3s; 
+        }
+
+        footer a:hover {
+            color: #f7b733; 
+        }
+
+        footer .social-icons {
+            margin: 20px 0; 
+        }
+
+        footer .social-icons a {
+            margin: 0 10px; 
+            font-size: 24px; 
+        }
+
+        footer .quick-links {
+            margin: 20px 0; 
+        }
+
+        footer .quick-links a {
+            margin: 0 15px; 
+            font-weight: bold; 
+        }
+
+        footer form {
+            margin: 20px 0;
+        }
+
+        footer form input[type="email"] {
+            padding: 10px; 
+            border: none; 
+            border-radius: 10rem; 
+            outline: none;
+        }
+
+        footer form button {
+            background-color: #f7b733; 
+            color: white; 
+            border: none; 
+            border-radius: 20px; 
+            padding: 10px 20px; 
+            margin-left: 10px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+
+        footer form button:hover {
+            background-color: #ffdd00; /* Change button color on hover */
+        }
+
+        footer .copyright {
+            margin-top: 20px; /* Margin for spacing */
+            font-size: 14px; /* Font size for copyright text */
+        }
+        .Error {
+            background-color: red;
+            color: white;
+            padding: 2px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none; /* Hidden by default */
+            /* margin-bottom: 15px; */
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><b>Epic Engineers</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="me-auto"></div>
+                <div>
+                    <% if (!currentUser) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="loginDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                            <li><a class="dropdown-item" href="/user/login">User Login</a></li>
+                            <li><a class="dropdown-item" href="/services/login">Service Provider Login</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-outline-primary dropdown-toggle" type="button" id="signupDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Sign Up
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="signupDropdown">
+                            <li><a class="dropdown-item" href="/user/signup">User Sign Up</a></li>
+                            <li><a class="dropdown-item" href="/services/signup">Service Provider Sign Up</a></li>
+                        </ul>
+                    </div>
+                    <% } else { %>
+
+                    <a href="/logout" class="btn btn-outline-primary">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Provider Info Section -->
+    <div class="profile-header row">
+        <div class="col-md-4">
+            <!-- Placeholder for Profile Image -->
+            <img src="<%= provider.profileImage %>" alt="Profile Image" class="img-fluid">
+        </div>
+        <div class="col-md-8">
+            <h1><%= provider.serviceCategory %></h1>
+            <h4>Service Provider Name: <%= provider.username %></h4>
+            <p>Work Description: <%= provider.workDescription %></p>
+            <h6>Experience: <%= provider.experience %> years</h6>
+
+            <% if(currentUser && currentUser._id.equals(provider._id)){ %>
+                <a href="/slot/<%= provider._id %>" class="btn btn-primary mt-3">Add Slot</a>
+                <a href="/services/booking/<%= provider._id %>" class="btn btn-primary mt-3">See Booking Details</a>
+                <a href="/services/slot/<%= provider._id %>" class="btn btn-primary mt-3">See Booking History</a>
+            <% } %>
+        </div>
+    </div>
+
+        <!-- Slots Section -->
+        <% if(provider.slots && provider.slots.length){ %>
+            <h2>Available Slots</h2>
+            <div class="row">
+                <% provider.slots.forEach((slot) => { %>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="Error" id="errorBox">
+                                <p><%= error || "" %></p> <!-- Display the error message if available -->
+                            </div>
+                            <h5 class="card-title">Date: <%= new Date(slot.date).toLocaleDateString('en-IN', {year: 'numeric', month: 'long', day: 'numeric'}) %></h5>
+                            <p>Start Time: <%= slot.startTime %></p>
+                            <p>End Time: <%= slot.endTime %></p>
+                            <p>Price: ₹<%= slot.price %></p>
+                            <p>More Info: <%= slot.additionalInfo %></p>
+                            
+                            <!-- Number of Applicants -->
+                            <p>Number of Applicants: <%= slot.booking ? slot.booking.length : 0 %></p>
+        
+                            <!-- Book Now Button -->
+                            <form action="/booking/<%= slot._id %>" method="get">
+                                <button type="submit" class="btn btn-success">Book Now</button>
+                            </form>
+        
+                            <!-- Button to trigger modal for showing booked customers -->
+                            <% if(slot.booking && slot.booking.length > 0 && currentUser && currentUser._id.equals(provider._id)) { %>
+                                <button class="btn btn-info mt-3" data-bs-toggle="modal" data-bs-target="#bookingsModal-<%= slot._id %>">Show Booked Customers</button>
+        
+                                <!-- Modal for displaying booked customers -->
+                                <div class="modal fade" id="bookingsModal-<%= slot._id %>" tabindex="-1" aria-labelledby="bookingsModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="bookingsModalLabel">Booked Customers</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <% slot.booking.forEach((booking) => { %>
+                                                <div class="card mt-3">
+                                                    <div class="card-body">
+                                                        <p><strong>Customer Name:</strong> <%= booking.user.username %></p>
+                                                        <p><strong>Problem Description:</strong> <%= booking.problemDescription %></p>
+                                                        <p><strong>Status:</strong> <%= booking.status %></p>
+                                                        <% if(booking.status !== "Confirm"){ %>
+                                                            <form action="/booking/<%= provider._id %>/<%= booking._id %>/confirm" method="post">
+                                                                <button class="btn btn-primary">Confirm Booking</button>
+                                                            </form>
+                                                        <% } %>
+                                                        <% if(booking.status !== "Cancel"){ %>
+                                                            <form action="/booking/<%= provider._id %>/<%= booking._id %>/cancel" method="post">
+                                                                <button class="btn btn-secondary">Cancel Booking</button>
+                                                            </form>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                                <% }) %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+        
+                            <!-- Delete Slot Button -->
+                            <% if(currentUser && currentUser._id.equals(provider._id)){ %>
+                                <form action="/slot/<%= slot._id %>/<%= provider._id %>?_method=DELETE" method="POST" class="mt-2">
+                                    <button type="submit" class="btn btn-danger">Delete Slot</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <p>No Slots Available</p>
+        <% } %>
+        
+        <div style="margin-top: 4rem;" >
+            <h3 style="margin-left: 12rem;" >Hii!, I Am Here!</h3>
+            <div id="map"></div>
+        </div>
+        
+        <!-- Review Section (Unchanged) -->
+        <% if(currentUser && currentUser._id && (!currentUser._id.equals(provider._id))){ %>
+            <div class="review-section">
+                <h2>Leave a Review</h2>
+                <div class="review-container">
+                    <form action="/review/<%= provider._id %>" method="post">
+                        <div class="mb-3">
+                            <textarea class="form-control" name="reviewText" rows="3" placeholder="Write your review..." required></textarea>
+                        </div>
+                        <div class="mb-3 star-rating">
+                            <input type="radio" id="rating5" name="rating" value="5">
+                            <label for="rating5">&#9733;</label>
+                            <input type="radio" id="rating4" name="rating" value="4">
+                            <label for="rating4">&#9733;</label>
+                            <input type="radio" id="rating3" name="rating" value="3">
+                            <label for="rating3">&#9733;</label>
+                            <input type="radio" id="rating2" name="rating" value="2">
+                            <label for="rating2">&#9733;</label>
+                            <input type="radio" id="rating1" name="rating" value="1">
+                            <label for="rating1">&#9733;</label>
+                        </div>
+                        <button class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        <% } %>
+        
+        <% if(provider.reviews.length){ %>
+            <div class="review-section">
+                <h2>Reviews</h2>
+                <div class="row">
+                    <% for(let review of provider.reviews){ %>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="review-container">
+                            <p class="review-card-title">Reviewed by: <%= review.user.username %></p>
+                            <p>
+                                <strong>Rating:</strong>
+                                <span class="rating-stars">
+                                    <% for(let i = 1; i <= 5; i++){ %>
+                                        <% if(i <= review.rating){ %> 
+                                            &#9733; 
+                                        <% } else { %>
+                                            &#9734;
+                                        <% } %>
+                                    <% } %>
+                                </span> (<%= review.rating %> stars)
+                            </p>
+                            <p class="review-text"><%= review.reviewText %></p>
+                            <% if(currentUser && currentUser._id.equals(review.user._id)) { %>
+                            <form method="post" action="/review/<%= provider._id %>/<%= review._id %>?_method=DELETE">
+                                <button class="btn btn-danger btn-sm">Delete Review</button>
+                            </form>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.facebook.com" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.twitter.com" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+            <a href="https://www.instagram.com" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+        
+        <div class="quick-links">
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy Policy</a>
+        </div>
+    
+        <form>
+            <input type="email" placeholder="Enter your email" aria-label="Email Subscription">
+            <button type="submit">Subscribe</button>
+        </form>
+    
+        <div class="copyright">
+            &copy; <span id="year"></span> Epic Engineers. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        const coordinates=<%-JSON.stringify(provider.geometry.coordinates) %>;
+        mapboxgl.accessToken = 'pk.eyJ1IjoiYXJjaGFuYXN1dGFyMSIsImEiOiJjbTJtejYwbHQwMGxqMm1zOGt1YXh3ZHZ1In0.kdb71wIWQfAABKERUbWnAQ';
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+            zoom: 9 // starting zoom
+        });
+       
+        
+
+
+        const marker1 = new mapboxgl.Marker()
+        .setLngLat(coordinates)
+        .addTo(map);
+    </script>
+</body>
+
+</html>

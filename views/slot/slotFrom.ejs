@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Slot Creation Form</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #8ef2f9, #81a8fb); 
+        }
+
+        .form-container {
+            max-width: 650px; /* Increased width for a more spacious form */
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff; /* White background for the form */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .form-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-heading {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            color: #343a40; /* Dark color for the heading */
+        }
+
+        .terms-container {
+            margin-top: 30px;
+            margin-bottom: 30px; 
+            padding: 20px;
+            border: 1px solid #feffb0; /* Light border for the terms container */
+            border-radius: 10px;
+            background-color: #cffbbe; /* Light background for contrast */
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            width: 50%;
+            padding: 12px;
+            border-radius: 1rem;
+        }
+
+        .btn-primary:hover{
+            background: linear-gradient(45deg, #b522ef, #fa6b60);
+        }
+        .btn:disabled {
+            background: #a0a5b1;
+        }
+        .form-check-label {
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        ol {
+            padding-left: 20px; /* Indent list for clarity */
+        }
+        .Error {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none; /* Hidden by default */
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <h1 class="form-heading">Create Slot</h1>
+            <div class="Error" id="errorBox">
+                <p><%= error || "" %></p> <!-- Display the error message if available -->
+            </div>
+            <form id="slotForm" action="/slot/<%= provider._id %>?_method=put" method="POST" onsubmit="return validateForm()">
+                <!-- Date -->
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date:</label>
+                    <input type="date" id="date" name="date" class="form-control" required>
+                </div>
+
+                <!-- Start Time and End Time in a single row -->
+                <div class="mb-3 row">
+                    <div class="col">
+                        <label for="startTime" class="form-label">Start Time:</label>
+                        <input type="time" id="startTime" name="startTime" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label for="endTime" class="form-label">End Time:</label>
+                        <input type="time" id="endTime" name="endTime" class="form-control" required>
+                    </div>
+                </div>
+
+                <!-- Price (Optional) -->
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price (Optional):</label>
+                    <input type="number" id="price" name="price" class="form-control" min="0" step="0.01" placeholder="Enter price">
+                </div>
+
+                <!-- Additional Info (Optional) -->
+                <div class="mb-3">
+                    <label for="additionalInfo" class="form-label">Additional Info:</label>
+                    <textarea id="additionalInfo" name="additionalInfo" class="form-control" rows="3" placeholder="Notes"></textarea>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="terms-container">
+                    <h5>Terms and Conditions for Service Providers</h5>
+                    <ol>
+                        <li>You can create a slot from the current start time to a certain end time.</li>
+                        <li>You can have a time of 3 days to keep that slot active; after 3 days, that slot will be removed automatically.</li>
+                        <li>Once you create a slot, only you have permission and access to view the slot booking details of users.</li>
+                        <li>Created slot can be deleted from your side if you want within that time limit.</li>
+                    </ol>
+                    <div>
+                        <input type="checkbox" id="terms" class="terms-checkbox" required>
+                        <label for="terms" class="terms-label">I agree to the terms and conditions</label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Create Slot</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        // JavaScript to enable/disable the button based on checkbox state
+        document.getElementById('terms').addEventListener('change', function() {
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = !this.checked; // Enable if checked, disable if not
+        });
+        const error = "<%= error %>"; // Get the error value from EJS
+        const errorBox = document.getElementById("errorBox");
+
+        // Check if the error is not an empty string and show the error box
+        if (error) {
+            errorBox.style.display = "flex";  // Show the error box
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

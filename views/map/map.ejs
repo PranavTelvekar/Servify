@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mapbox GL JS map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width:100%; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYXJjaGFuYXN1dGFyMSIsImEiOiJjbTJtejYwbHQwMGxqMm1zOGt1YXh3ZHZ1In0.kdb71wIWQfAABKERUbWnAQ';
+    
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: <%- JSON.stringify(currentUser.geometry.coordinates)%>, // starting position [lng, lat]
+        zoom: 13 // starting zoom
+    });
+
+    // Passing the service providers data from the backend to the frontend
+    const serviceProviders = <%- JSON.stringify(serviceProviders) %>;
+
+    // Loop over service providers to create markers
+    serviceProviders.forEach(provider => {
+        const { _id, geometry } = provider;
+        if (geometry && geometry.coordinates && Array.isArray(geometry.coordinates)) {
+            // Ensure the coordinates are in the correct format: [longitude, latitude]
+            const [lng, lat] = geometry.coordinates;
+            
+            if (typeof lng === 'number' && typeof lat === 'number') {
+                // Create a new marker for each service provider
+                const marker = new mapboxgl.Marker()
+                    .setLngLat([lng, lat])  // Ensure coordinates are in [longitude, latitude] format
+                    .addTo(map);
+
+                // Add click event listener to redirect to the service provider's page
+                marker.getElement().addEventListener('click', () => {
+                    window.location.href = `/services/${_id}`;  // Redirecting to the provider's route
+                });
+            } else {
+                console.error('Invalid coordinates:', geometry.coordinates);
+            }
+        } else {
+            console.error('No valid coordinates found for provider:', provider);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Razorpay Web-Integration</title>
+</head>
+
+<body>
+  <form class="pay-form" data-amount="<%= slot.price %>" data-name="<%= slot._id %>" data-description="Slot Booking">
+    <input type="submit" value="Pay Now">
+  </form>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const forms = document.querySelectorAll(".pay-form");
+
+      forms.forEach(form => {
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Use dataset to get the values from the form's data-* attributes
+          const amount = form.dataset.amount;
+          const name = form.dataset.name;
+          const description = form.dataset.description;
+
+          try {
+            const response = await fetch("/createOrder", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                amount: amount,
+                name: name,
+                description: description
+              })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+              const options = {
+                key: result.key_id,
+                amount: result.amount,  // Amount in paisa
+                currency: "INR",
+                name: result.product_name,
+                description: result.description,
+                order_id: result.order_id,  // Razorpay order ID
+                handler: function (response) {
+                  alert("Payment Succeeded");
+                  window.location.href = "/paymentSuccess";
+                },
+                prefill: {
+                  name: result.name,
+                  email: result.email,
+                  contact: result.contact
+                },
+                theme: {
+                  color: "#2300a3"
+                }
+              };
+
+              const razorpayObject = new Razorpay(options);
+              razorpayObject.open();
+            } else {
+              alert(result.msg);
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred while creating the order.");
+          }
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>

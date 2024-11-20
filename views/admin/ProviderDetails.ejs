@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #f0f8ff, #e6e6fa);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #333;
+            font-size: 2em;
+            margin: 0;
+        }
+        .header p {
+            color: #555;
+            font-size: 1em;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            margin: 10px;
+            width: 180px; /* Reduced width for compactness */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .AverageRating {
+            background-color: #ff6f61;
+            color: white;
+        }
+        .Slots {
+            background-color: #00bcd4;
+            color: white;
+        }
+        .Bookings {
+            background-color: #ffc107;
+            color: black;
+        }
+        .card-title {
+            font-size: 1.4em;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .card-content {
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+        .icon {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        .admin-link {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .admin-link:hover {
+            background-color: #45a049;
+        }
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px; /* Limit the width for compactness */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Service Dashboard</h1>
+        <p>Welcome to the service management system</p>
+    </div>
+    <div class="cards-container">
+        <div class="card AverageRating">
+            <i class="fas fa-star icon"></i>
+            <div class="card-title">Average Rating</div>
+            <div class="card-content">
+                <%= AverageReview %>
+            </div>
+        </div>
+        <div class="card Slots">
+            <i class="fas fa-clock icon"></i>
+            <div class="card-title">Total Slots</div>
+            <div class="card-content">
+                <%= numberOfSlots %><br>
+                <span>Avg Price: <%= averagePrice %></span>
+            </div>
+        </div>
+        <div class="card Bookings">
+            <i class="fas fa-book icon"></i>
+            <div class="card-title">Total Bookings</div>
+            <div class="card-content">
+                <%= numberOfBookings %>
+            </div>
+        </div>
+    </div>
+    <a href="/admin" class="admin-link">Go to Admin Dashboard</a>
+</body>
+</html>
