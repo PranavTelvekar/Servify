@@ -7,163 +7,170 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400&display=swap" rel="stylesheet">
     <style>
+        /* General Styles */
         body {
-            font-family: 'Roboto', sans-serif;
-            background: #f5f5f5;
-            color: #333;
+            font-size: 20px;
+            font-family: 'Lora', serif;
+            background-color: #F5F5F5; /* Background Color */
+            color: #0D1B2A; /* Text Color */
+            line-height: 1.75;
         }
+
+        /* Navbar */
         .navbar-brand {
-            height: 50px;
-            width: 180px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 1rem;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #c89f18 !important; /* Accent Color */
+            font-weight: bold;
+            transition: color 0.3s ease;
         }
         .navbar-brand:hover {
-            background: linear-gradient(45deg, #b522ef, #fa6b60);
-            color: #fff;
+            color: #1F3B4D !important; /* Primary Color */
         }
-        .nav-item{
-            height: 50px;
-            width: 100px;
-            padding: 12px;
-            margin: 12px;
-            text-align: center;
-            align-items: center;
-            border-radius: 2rem;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            color: rgb(242, 233, 233);
+        .nav-item .nav-link {
+            color: #0D1B2A !important; /* Text Color */
+            font-size: 1.1rem;
+            padding: 8px 20px;
+            transition: color 0.3s ease;
         }
-        .dropdown-menu {
-            background: #fdfcff;
-            border: none;
+        .nav-item .nav-link:hover {
+            color: #D4AF37 !important; /* Accent Color */
         }
-        .dropdown-item {
-            color: #060404;
+        .dropdown-item{
+            color: #c89f18;
         }
-        .dropdown-item:hover {
-            background: #8e2de2;
-            color: #fff;
-        }
+
+        /* Hero Section */
         .hero-section {
-            padding: 60px 0;
+            background: #1F3B4D; /* Primary Color */
+            color: #F5F5F5; /* Background Color */
+            padding: 120px 0;
             text-align: center;
-            background: linear-gradient(to right, #8ef2f9, #81a8fb); 
-            color: white;
         }
         .hero-section h1 {
-            font-size: 3rem;
-            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #D4AF37; /* Accent Color */
         }
         .hero-section p {
-            font-size: 1.5rem;
-            margin-top: 20px;
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
         }
+
+        /* Cards Section */
         .card-container {
-            padding: 40px 0;
+            padding: 80px 0;
+            background-color: #F5F5F5; /* Background Color */
         }
         .card {
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(to right, #8ef2f9, #81a8fb);
-            transition: transform 0.2s;
+            background-color: #FFFFFF;
+            border: 1px solid #A0A7B1; /* Secondary Color */
+            border-radius: 12px;
+            color: #0D1B2A; /* Text Color */
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
         }
         .card-title {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1F3B4D; /* Primary Color */
         }
-        .testimonial-section, .about-section, .contact-section {
-            padding: 60px 0;
-            background: #f5f5f5;
+        .btn-primary {
+            background: #D4AF37; /* Accent Color */
+            border: none;
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            padding: 10px 25px;
+            transition: background 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #A0A7B1; /* Secondary Color */
+        }
+
+        /* About, Testimonials, Contact, Footer */
+        .about-section, .testimonial-section, .contact-section {
+            padding: 100px 0;
         }
         .testimonial {
-            background: linear-gradient(to right, #8ef2f9, #81a8fb); 
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            transition: transform 0.2s;
-        }
-        .testimonial:hover {
-            transform: translateY(-5px);
+            padding: 25px;
+            background: #FFFFFF;
+            border: 1px solid #D4AF37; /* Accent Color */
+            border-radius: 12px;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
         }
         .testimonial h5 {
-            font-family: 'Roboto Condensed', sans-serif;
-            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1F3B4D; /* Primary Color */
         }
         .testimonial img {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             margin-right: 15px;
         }
+
+        /* Contact Form */
         .contact-form input, .contact-form textarea {
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #ced4da;
-            padding: 10px;
-        }
-        .contact-form textarea {
-            resize: none;
+            background-color: #F5F5F5;
+            color: #0D1B2A;
+            border: 1px solid #A0A7B1;
+            padding: 14px;
+            border-radius: 10px;
         }
         .contact-form button {
-            border-radius: 8px;
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            color: white;
-            border: none;
-            transition: background 0.3s;
+            background: #D4AF37; /* Accent Color */
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 30px;
+            padding: 12px 35px;
+            transition: background 0.3s ease;
         }
         .contact-form button:hover {
-            background: linear-gradient(45deg, #b522ef, #fa6b60);
+            background: #A0A7B1; /* Secondary Color */
         }
+
+        /* Footer */
         footer {
-            background: linear-gradient(to right, #8ef2f9, #81a8fb); 
-            color: white;
+            background: #1F3B4D; /* Primary Color */
+            color: #F5F5F5;
+            padding: 30px 0;
             text-align: center;
-            padding: 20px 0;
-            position: relative;
-            bottom: 0;
-            width: 100%;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="#"><b>Epic Engineers</b></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand" href="#">Epic Engineers</a>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Login
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
-                            <li><a class="dropdown-item" href="/user/login">Login as User</a></li>
-                            <li><a class="dropdown-item" href="/services/login">Login as Service Provider</a></li>
+                        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Login</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/user/login">User</a></li>
+                            <li><a class="dropdown-item" href="/services/login">Service Provider</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Signup
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="signupDropdown">
-                            <li><a class="dropdown-item" href="/user/signup">Signup as User</a></li>
-                            <li><a class="dropdown-item" href="/services/signup">Signup as Service Provider</a></li>
+                        <a class="nav-link dropdown-toggle" href="#" id="signupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Signup</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/user/signup">User</a></li>
+                            <li><a class="dropdown-item" href="/services/signup">Service Provider</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -175,130 +182,42 @@
     <section class="hero-section">
         <div class="container">
             <h1>Welcome to Our Services Platform</h1>
-            <p>Connecting you with the best service providers in your area.</p>
+            <p>Connecting you with the best service providers in your area, with unmatched expertise and luxury.</p>
         </div>
     </section>
 
-    <!-- Main Content - Cards Section -->
+    <!-- Cards Section -->
     <section class="card-container">
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="" class="card-img-top" alt="Plumbing Services">
-                        <div class="card-body">
-                            <h5 class="card-title">Plumbing Services</h5>
-                            <p class="card-text">Get professional plumbing services for your home or business. Available 24/7 for emergency repairs and installations.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
+                    <div class="card p-4">
+                        <h5 class="card-title">Plumbing Services</h5>
+                        <p class="card-text">Professional plumbing services for all your needs, available 24/7.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="">
-                        <div class="card-body">
-                            <h5 class="card-title">Electrical Services</h5>
-                            <p class="card-text">Experienced electricians to handle all your electrical needs, from installations to troubleshooting and repairs.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
+                    <div class="card p-4">
+                        <h5 class="card-title">Electrical Services</h5>
+                        <p class="card-text">Experienced electricians ready to handle your electrical needs.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="" class="card-img-top" alt="Cleaning Services">
-                        <div class="card-body">
-                            <h5 class="card-title">Cleaning Services</h5>
-                            <p class="card-text">Top-notch cleaning services for residential and commercial properties. Book our reliable and professional cleaners today.</p>
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
+                    <div class="card p-4">
+                        <h5 class="card-title">Cleaning Services</h5>
+                        <p class="card-text">Top-notch cleaning services for both residential and commercial properties.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- About Us Section -->
-    <section class="about-section text-center">
-        <div class="container">
-            <h1>About Us</h1>
-            <p>We are dedicated to connecting customers with reliable and professional service providers. Our platform ensures quality, convenience, and satisfaction in every service experience.
-                <pre><h2>Our Team</h2>
-<h3>Tushar Sutar
-Pranav Telvekar
-Vaibhav Sutar
-Kunal Shinde</h3>
-                </pre>
-            </p>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonial-section">
-        <div class="container">
-            <h2 class="text-center">What Our Customers Say</h2>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="testimonial d-flex align-items-start">
-                        <img src="https://via.placeholder.com/80" alt="Customer Photo">
-                        <div>
-                            <h5>Tushar</h5>
-                            <p>"Great service! The plumber arrived on time and fixed my sink quickly. Highly recommend this platform!"</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="testimonial d-flex align-items-start">
-                        <img src="https://via.placeholder.com/80" alt="Customer Photo">
-                        <div>
-                            <h5>Pranav</h5>
-                            <p>"The electricians were professional and efficient. They solved my electrical issues in no time!"</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="testimonial d-flex align-items-start">
-                        <img src="https://via.placeholder.com/80" alt="Customer Photo">
-                        <div>
-                            <h5>Vaibhav</h5>
-                            <p>"I am very satisfied with the cleaning service. My house has never looked better!"</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="testimonial d-flex align-items-start">
-                        <img src="https://via.placeholder.com/80" alt="Customer Photo">
-                        <div>
-                            <h5>Kunal</h5>
-                            <p>"Excellent service! Quick response and great quality work. Will definitely use again!"</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <h2 class="text-center">Contact Us</h2>
-            <form class="contact-form">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
-                </div>
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control" id="message" rows="4" placeholder="Enter your message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 Epic Engineers. All rights reserved.</p>
+        <p>&copy; 2024 Epic Engineers. All Rights Reserved.</p>
     </footer>
 
     <!-- Bootstrap JS -->
