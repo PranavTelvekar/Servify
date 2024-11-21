@@ -150,6 +150,69 @@
             padding: 30px 0;
             text-align: center;
         }
+
+        /* Header Section */
+        .about-header {
+            background-color: #1F3B4D;
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .about-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            color: #D4AF37;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 50px 0;
+        }
+
+        .team-member {
+            text-align: center;
+            margin-bottom: 50px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member h3 {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #1F3B4D;
+        }
+
+        .team-member p {
+            font-size: 1rem;
+            color: #6c757d;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        .team-member .role {
+            color: #D4AF37;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -225,6 +288,58 @@
             </div>
         </div>
     </section>
+    <!-- About Us Header -->
+    <section class="about-header">
+        <div class="container">
+            <h1>About Our Project Team</h1>
+            <p>Meet the dedicated team members of our college project, working together to innovate and create.</p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Team Member 1 -->
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <img src="https://res.cloudinary.com/deohfzmmp/image/upload/v1729364306/Mini_Project/tmp-1-1729364301438.jpg" alt="Team Member 1">
+                        <h3>John Doe</h3>
+                        <p class="role">Team Leader</p>
+                        <p>John manages the project, ensuring that the team is working efficiently and meeting deadlines.</p>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <img src="https://res.cloudinary.com/deohfzmmp/image/upload/v1729364306/Mini_Project/tmp-1-1729364301438.jpg" alt="Team Member 2">
+                        <h3>Jane Smith</h3>
+                        <p class="role">Frontend Developer</p>
+                        <p>Jane designs and implements the user interface, making sure the project looks modern and user-friendly.</p>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <img src="https://res.cloudinary.com/deohfzmmp/image/upload/v1729364306/Mini_Project/tmp-1-1729364301438.jpg" alt="Team Member 3">
+                        <h3>Robert Brown</h3>
+                        <p class="role">Backend Developer</p>
+                        <p>Robert focuses on server-side logic, ensuring the functionality behind the project works seamlessly.</p>
+                    </div>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <img src="https://res.cloudinary.com/deohfzmmp/image/upload/v1729364306/Mini_Project/tmp-1-1729364301438.jpg" alt="Team Member 4">
+                        <h3>Emily White</h3>
+                        <p class="role">Data Analyst</p>
+                        <p>Emily analyzes data and integrates insights to make the project more efficient and data-driven.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Footer -->
     <footer>
