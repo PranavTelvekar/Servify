@@ -297,15 +297,20 @@
                                                         <p><strong>Customer Name:</strong> <%= booking.user.username %></p>
                                                         <p><strong>Problem Description:</strong> <%= booking.problemDescription %></p>
                                                         <p><strong>Status:</strong> <%= booking.status %></p>
-                                                        <% if(booking.status !== "Confirm"){ %>
+                                                        <% if(booking.status !== "Confirm"&&booking.status !== "Cancel"&& booking.status!=="Done"){ %>
                                                             <form action="/booking/<%= provider._id %>/<%= booking._id %>/confirm" method="post">
                                                                 <button class="btn btn-primary">Confirm Booking</button>
                                                             </form>
                                                         <% } %>
+                                                        <br>
+                                                        <br>
                                                         <% if(booking.status !== "Cancel"){ %>
                                                             <form action="/booking/<%= provider._id %>/<%= booking._id %>/cancel" method="post">
                                                                 <button class="btn btn-secondary">Cancel Booking</button>
                                                             </form>
+                                                        <% } %>
+                                                        <% if(booking.payment=="Done"){ %>
+                                                            <div>Payment Is Successfully Done By Customer</div>
                                                         <% } %>
                                                     </div>
                                                 </div>

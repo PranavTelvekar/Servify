@@ -430,6 +430,15 @@
                                     <button>Cancel Booking</button>
                                 </form>
                             <% } %>
+                            <% if(booking.status=="Confirm"&&booking.payment!='Done'){ %>
+                                <form action="/user/<%= booking._id %>/payment" method="get">
+                                    <input type="hidden" name="amount" value="<%= booking.slot.price %>">
+                                    <button>Pay To Confirm</button>
+                                </form>
+                            <% } %>
+                            <% if(booking.payment=='Done'){ %>
+                                <div>Your Pament Is successful</div>
+                            <% } %>
                         </div>
                     </div>
                     <% } %>

@@ -30,6 +30,11 @@ const BookingSchema = new mongoose.Schema({
     },
     cancelBefore:{
         type:Date,
+    },
+    payment:{
+        type:String,
+        enum:['Done','Not'],
+        default:'Not'
     }
 });
 

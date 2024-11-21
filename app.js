@@ -11,7 +11,7 @@ app.listen(port,()=>{
     console.log(`Server Is Started On Port ${port}`);
 })
 
-const Razorpay = require('razorpay');
+
 
 //---------------------------------------------------------------------------------------
 
@@ -26,10 +26,14 @@ const Review=require("./models/review")
 // getting-started.js
 const mongoose = require('mongoose');
 
-main().catch(err => console.log(err));
+main().then((res)=>{
+    console.log("MongoDB Is Also Connected")
+})
+.catch(err => console.log(err));
 
 async function main() {
   await mongoose.connect(`${process.env.MONGO_URL}`);
+  //await mongoose.connect('mongodb://127.0.0.1:27017/test');
 
   // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
 }
@@ -177,49 +181,57 @@ app.get("/mapbox",ensureRole("User"), wrapAsync(async (req, res) => {
 
 //Payment
 
+const Razorpay = require('razorpay');
+
 const instance = new Razorpay({
-    key_id: 'rzp_live_0AHfGkDFyzMpPX',
-    key_secret: '4kXfLxC4AlNs9sutQKYkyjv0',
+    key_id: `${process.env.RAZORPAY_ID_KEY}`,
+    key_secret: `${process.env.RAZORPAY_SECRET_KEY}`,
 });
 
-app.get('/payment', (req, res) => {
-    res.render("payment/payment.ejs"); // Serve the frontend page
-});
-
-app.post('/create-order', async (req, res) => {
-    const { amount } = req.body; // Amount from frontend (in rupees)
+app.get("/user/:bid/payment",async(req,res)=>{
+    let {bid}=req.params
+    const booking=await Booking.findById(bid).populate("user").populate({path:"slot",populate:"serviceProvider"});
+    console.log(booking);
+    const bookingUser=booking.user;
+    const bookingServiceProvider=booking.serviceProviders;
+    const slot=booking.slot;
+    const amount=slot.price;
     const options = {
-      amount: amount * 100, // Convert to smallest currency unit (e.g., paise for INR)
-      currency: "INR",
-      receipt: `receipt_${Date.now()}`,
+        amount: amount * 100, // Convert to paisa
+        currency: "INR",
+        receipt: "order_rcptid_11",
     };
-  
-    try {
-      const order = await Razorpay.orders.create(options);
-      res.json(order);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Error creating order");
-    }
-  });
+    instance.orders.create(options, (err, order) => {
+        if (err) {
+            return res.status(500).json({ success: false, msg: "Error in creating order" });
+        }
 
-  app.post('/verify-payment', (req, res) => {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-  
-    const secret = 'YOUR_KEY_SECRET'; // Replace with your Razorpay secret key
-    const crypto = require('crypto');
-  
-    const generatedSignature = crypto.createHmac('sha256', secret)
-      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
-      .digest('hex');
-  
-    if (generatedSignature === razorpay_signature) {
-      res.json({ success: true, message: 'Payment verified successfully' });
-    } else {
-      res.json({ success: false, message: 'Payment verification failed' });
-    }
-  });
-  
+        // Render a new view for payment
+        res.render('payment/payment.ejs', {
+            key_id: process.env.RAZORPAY_KEY_ID,  // Razorpay Key ID from environment
+            amount: order.amount,
+            order_id: order.id,
+            slot_id:slot._id,
+            description: booking.description,
+            booking
+        });
+    });
+    // res.render("payment/payment.ejs",{slot});
+})  
+
+app.get('/paymentSuccess/:bid', async(req, res) => {
+    let {bid}=req.params;
+    const booking=await Booking.findById(bid);
+    booking.payment='Done';
+    booking.save();
+    req.flash("success","Payment Was Successful");
+    res.redirect(`/user/${req.user._id}/bookings`);
+});
+
+app.get('/paymentFailure', (req, res) => {
+    req.flash("error","Payment Was Unsuccessful");
+    res.redirect(`/user/${req.user._id}/bookings`);
+});
 
 //---------------Error Handling ---------------------------------------------------------//
 
