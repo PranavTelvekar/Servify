@@ -150,71 +150,81 @@
             transform: scale(1.05);
             color: white;
         }
+        /* Footer */
         footer {
-            background: linear-gradient(120deg, #6a11cb, #2575fc); 
-            color: white; 
-            padding: 40px 20px; 
-            text-align: center; 
-            position: relative; 
+            background: #1F3B4D; /* Primary Color */
+            color: #F5F5F5;
+            padding: 40px 0;
+            text-align: center;
         }
 
-        footer a {
-            color: white;
-            text-decoration: none; 
-            transition: color 0.3s; 
+        footer h5 {
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
         }
 
-        footer a:hover {
-            color: #f7b733; 
+        footer p {
+            font-size: 1rem;
         }
 
-        footer .social-icons {
-            margin: 20px 0; 
+        footer ul {
+            padding: 0;
+            list-style-type: none;
         }
 
-        footer .social-icons a {
-            margin: 0 10px; 
-            font-size: 24px; 
+        footer ul li {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #F5F5F5;
         }
 
-        footer .quick-links {
-            margin: 20px 0; 
+        footer ul li i {
+            margin-right: 10px;
+            color: #D4AF37;
         }
 
-        footer .quick-links a {
-            margin: 0 15px; 
-            font-weight: bold; 
+        footer ul li a {
+            color: #F5F5F5;
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
-        footer form {
-            margin: 20px 0;
+        footer ul li a:hover {
+            color: #D4AF37;
         }
 
-        footer form input[type="email"] {
-            padding: 10px; 
-            border: none; 
-            border-radius: 10rem; 
-            outline: none;
+        /* Social Media Icons */
+        footer ul.list-inline {
+            margin: 0;
+            padding: 0;
         }
 
-        footer form button {
-            background-color: #f7b733; 
-            color: white; 
-            border: none; 
-            border-radius: 20px; 
-            padding: 10px 20px; 
-            margin-left: 10px; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
+        footer ul.list-inline li {
+            margin: 0 10px;
         }
 
-        footer form button:hover {
-            background-color: #ffdd00; /* Change button color on hover */
+        footer ul.list-inline li img {
+            width: 40px;
+            transition: transform 0.3s ease;
         }
 
-        footer .copyright {
-            margin-top: 20px; /* Margin for spacing */
-            font-size: 14px; /* Font size for copyright text */
+        footer ul.list-inline li img:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            footer .text-md-start {
+                text-align: center;
+            }
+
+            footer .col-md-4 {
+                margin-bottom: 30px;
+            }
+
+            footer ul.list-inline {
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -343,29 +353,54 @@
             </div>
         </div>
     </div>
+    <!-- Footer -->
     <footer>
-        <div class="social-icons">
-            <a href="https://www.facebook.com" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.twitter.com" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-            <a href="https://www.instagram.com" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        </div>
-        
-        <div class="quick-links">
-            <a href="/about">About Us</a>
-            <a href="/contact">Contact</a>
-            <a href="/privacy">Privacy Policy</a>
-        </div>
-    
-        <form>
-            <input type="email" placeholder="Enter your email" aria-label="Email Subscription">
-            <button type="submit">Subscribe</button>
-        </form>
-    
-        <div class="copyright">
-            &copy; <span id="year"></span> Epic Engineers. All rights reserved.
+        <div class="container">
+            <div class="row text-center text-md-start">
+                <!-- Company Info -->
+                <div class="col-md-4 mb-4">
+                    <h5>Epic Engineers</h5>
+                    <p>Your trusted service partner for plumbing, electrical, and home maintenance services. We ensure quality work with professional expertise.</p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone-alt"></i> +91 1234567890</li>
+                        <li><i class="fas fa-envelope"></i> info@epicengineers.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123, Main Street, Kolhapur, India</li>
+                    </ul>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="col-md-4 mb-4">
+                    <h5>Follow Us</h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a href="https://www.instagram.com" target="_blank">
+                                <img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" alt="Instagram">
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com" target="_blank">
+                                <img src="https://img.icons8.com/fluent/48/000000/linkedin.png" alt="LinkedIn">
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://wa.me/911234567890" target="_blank">
+                                <img src="https://img.icons8.com/fluent/48/000000/whatsapp.png" alt="WhatsApp">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Copyright Section -->
+            <div class="text-center mt-4">
+                <p>&copy; 2024 Epic Engineers. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
-    
     <script>
         document.getElementById("year").innerText = new Date().getFullYear();
     </script>    
