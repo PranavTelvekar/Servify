@@ -145,7 +145,7 @@ router.get("/:bid/bookingCancel",ensureRole("User"),wrapAsync(async(req,res)=>{
     }
     booking.status="Cancel";
     booking.save();
-    res.redirect(`user/${req.user._id}/bookings`);
+    res.redirect(`/user/${req.user._id}/bookings`);
 }))
 
 
